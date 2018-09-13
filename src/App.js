@@ -109,6 +109,8 @@ this.lookup = () => {
             </Grid>
           </Grid>
 
+          <span className='footnote'>** S= Support & R = Resistance ** </span>
+
 
          </div>
       </div>

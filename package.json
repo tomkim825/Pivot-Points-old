@@ -2,6 +2,7 @@
   "name": "pivot_points",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tomkim825.github.io/Pivot-Points/",
   "dependencies": {
     "@material-ui/core": "^3.0.3",
     "@material/textfield": "^0.39.3",
@@ -12,6 +13,8 @@
     "react-scripts": "1.1.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

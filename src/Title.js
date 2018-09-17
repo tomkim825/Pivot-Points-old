@@ -8,19 +8,19 @@ render() {
     <div className="">
     - 
     <br/>  <br/>
-       R3:  
+       Resistance3:  
        <br/>  <br/>
-       R2: 
+       Resistance2: 
        <br/>  <br/>
-       R1: 
+       Resistance1: 
        <br/>  <br/>
        Pivot: 
        <br/>  <br/>
-       S1: 
+       Support1: 
        <br/>  <br/>
-       S2: 
+       Support2: 
        <br/>  <br/>
-       S3: 
+       Support3: 
     </div>
   );
 }

@@ -109,9 +109,6 @@ this.lookup = () => {
               <Demark state={this.state}/>
             </Grid>
           </Grid>
-
-          <span className='footnote'>** S= Support & R = Resistance ** </span>
-
         </div>
          </div>
       </div>

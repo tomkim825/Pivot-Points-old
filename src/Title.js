@@ -6,7 +6,6 @@ class Title extends Component {
 render() {
   return (
     <div className="">
-    <br/> 
     - 
     <br/>  <br/>
        R3:  

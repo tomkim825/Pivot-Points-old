@@ -6,7 +6,6 @@ class Demark extends Component {
 render() {
   return (
     <div className="">
-    <br/> 
     DeMark
         <br/>  <br/>
       --

@@ -71,6 +71,7 @@ this.lookup = () => {
     return (
       <div className="App">
         <div className="container">
+          <div className='content'>
             <h1> Pivot Points </h1>
             <TextField id="symbol" type="text"  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
             <br/>
@@ -111,7 +112,7 @@ this.lookup = () => {
 
           <span className='footnote'>** S= Support & R = Resistance ** </span>
 
-
+        </div>
          </div>
       </div>
     );

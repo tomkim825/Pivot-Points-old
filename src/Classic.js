@@ -6,7 +6,6 @@ class Classic extends Component {
 render() {
   return (
     <div className="">
-    <br/> 
     Classic 
     <br/>  <br/>
     $ {   (parseFloat(this.props.state.classicPP) + 2*(parseFloat(this.props.state.high) - parseFloat(this.props.state.low))).toFixed(2) }

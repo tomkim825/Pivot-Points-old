@@ -6,7 +6,6 @@ class Camarilla extends Component {
 render() {
   return (
     <div className="">
-    <br/> 
     Camarilla 
         <br/>  <br/>
        $ {   (parseFloat(this.props.state.close) + (parseFloat(this.props.state.range))*1.1/4).toFixed(2) }

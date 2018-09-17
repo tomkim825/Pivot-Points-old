@@ -6,7 +6,6 @@ class Fib extends Component {
 render() {
   return (
     <div className="">
-    <br/> 
     Fibonacci
         <br/>  <br/>
        $ {   (parseFloat(this.props.state.close) + (parseFloat(this.props.state.range))).toFixed(2) }

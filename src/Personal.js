@@ -11,21 +11,13 @@ import Fib from './Fib';
 import Demark from './Demark';
 import subscriptionkey from './config/subscriptionkey.js'
 
-class App extends Component {
+class Personal extends Component {
   constructor (props) {
     super(props);
-
-    var defaultValue;
-
-    if (localStorage.getItem('symbol')){
-      defaultValue = localStorage.getItem('symbol');
-    } else{
-      defaultValue ='';
-    }
+    var symbol =props.match.params.symbol;
 
     this.state = {
-      entry:'',
-      symbol: defaultValue, 
+      symbol: symbol.toUpperCase(), 
       stock:'',
       open: 0,
       high: 0,
@@ -38,7 +30,7 @@ class App extends Component {
       message:''
   };
 
-
+  
 this.enterSymbol = (event) => {
     this.setState({symbol: event.target.value.toUpperCase()});
 }
@@ -47,7 +39,7 @@ var component = this;
 this.lookup = () => {
   component.setState({message:'Collecting data...'});
   $.ajax({
-    url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+component.state.symbol+ '&apikey=' + subscriptionkey, 
+    url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ this.state.symbol + '&apikey=' + subscriptionkey, 
     // component.state.symbol.toUpperCase()
     crossDomain: true,
     dataType: "json",
@@ -77,7 +69,6 @@ this.lookup = () => {
           x=parseFloat(high )+ parseFloat(low) + 2*parseFloat(close);
         }
         component.setState( {high, low, stock,close, open,date,classicPP, range,x, message:date});
-        localStorage.setItem('symbol', stock);
       }},
     error: function (jqXHR, textStatus, error) {
         console.log("Post error: " + error);
@@ -87,11 +78,8 @@ this.lookup = () => {
 }
 
 }
-
 componentDidMount(){
-  if(localStorage.getItem('symbol')){
   this.lookup();
-}
 }
 
   render() {
@@ -99,8 +87,8 @@ componentDidMount(){
       <div className="App">
         <div className="container">
           <div className='content'>
-            <h1> Pivot Points </h1>
-            <TextField id="symbol" type="text" defaultValue={localStorage.getItem('symbol')}  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
+            <h1> Pivot Points for {this.state.symbol}</h1>
+            <TextField id="symbol" type="text"  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
             <br/>
             <Button id='button' variant="contained" color="primary" onClick={this.lookup}> Look up </Button>
            <br/>
@@ -143,4 +131,4 @@ componentDidMount(){
   }
 }
 
-export default App;
+export default Personal;

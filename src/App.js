@@ -25,7 +25,8 @@ class App extends Component {
       close:0,
       classicPP: 0.00,
       range:0,
-      x:0
+      x:0,
+      message:''
   };
 
 this.enterSymbol = (event) => {
@@ -34,15 +35,17 @@ this.enterSymbol = (event) => {
 var component = this;
 
 this.lookup = () => {
+  component.setState({message:'Fetching data...'});
   $.ajax({
     url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+component.state.symbol+ '&apikey=' + subscriptionkey, 
     // component.state.symbol.toUpperCase()
     crossDomain: true,
     dataType: "json",
     success: function(data, textStatus, jqXHR) {
+      console.log(data);
         // var info = data['Global Quote'];
         var stock =  data['Global Quote']["01. symbol"];
-        var date =  data['Global Quote']["07. latest trading day"];
+        var date =  'Data based on last trading day: ' + data['Global Quote']["07. latest trading day"];
         var high = parseFloat(data['Global Quote']["03. high"]).toFixed(2);
         var low =  parseFloat(data['Global Quote']["04. low"]).toFixed(2);
         var open = parseFloat(data['Global Quote']["02. open"]).toFixed(2);
@@ -50,6 +53,10 @@ this.lookup = () => {
         var classicPP = ((parseFloat(high)+parseFloat(low)+parseFloat(close))/3).toFixed(2);
         var range = (parseFloat(high)-parseFloat(low)).toFixed(2);
         var x;
+        if(close === 'NaN'){
+          component.setState({message:'Server error or busy. Please try again in a minute'});
+        };
+
         if(parseFloat(close) > parseFloat(open)){
           x=2*parseFloat(high )+ parseFloat(low) + parseFloat(close);
         } else if(parseFloat(close) < parseFloat(open)){
@@ -57,10 +64,11 @@ this.lookup = () => {
         } else if(parseFloat(close) === parseFloat(open)){
           x=parseFloat(high )+ parseFloat(low) + 2*parseFloat(close);
         }
-        component.setState( {high, low, stock,close, open,date,classicPP, range,x});
+        component.setState( {high, low, stock,close, open,date,classicPP, range,x, message:date});
       },
     error: function (jqXHR, textStatus, error) {
         console.log("Post error: " + error);
+        component.setState({message:'Server error or busy. Please try again in a minute'});
     }
 });
 }
@@ -76,9 +84,9 @@ this.lookup = () => {
             <TextField id="symbol" type="text"  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
             <br/>
             <Button id='button' variant="contained" color="primary" onClick={this.lookup}> Look up </Button>
-            <br/>
+           <br/>
+           <span id='message'> {this.state.message}</span>
             <div>
-              <br/> 
               <span className="stats">High: $ {this.state.high} </span>
                <span className="stats">Low: $ {this.state.low} </span>
                <span className="stats">Open: $ {this.state.open} </span>

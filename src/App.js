@@ -42,7 +42,6 @@ this.lookup = () => {
     crossDomain: true,
     dataType: "json",
     success: function(data, textStatus, jqXHR) {
-      console.log(data);
         // var info = data['Global Quote'];
         var stock =  data['Global Quote']["01. symbol"];
         var date =  'Data based on last trading day: ' + data['Global Quote']["07. latest trading day"];

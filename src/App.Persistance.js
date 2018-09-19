@@ -15,8 +15,16 @@ class App extends Component {
   constructor (props) {
     super(props);
 
+    var defaultValue;
+
+    if (localStorage.getItem('symbol')){
+      defaultValue = localStorage.getItem('symbol');
+    } else{
+      defaultValue ='';
+    }
+
     this.state = {
-      symbol: '', 
+      symbol: defaultValue, 
       stock:'',
       open: 0,
       high: 0,
@@ -29,19 +37,23 @@ class App extends Component {
       message:''
   };
 
+
 this.enterSymbol = (event) => {
     this.setState({symbol: event.target.value.toUpperCase()});
 }
 var component = this;
 
 this.lookup = () => {
-  component.setState({message:'Fetching data...'});
+  component.setState({message:'Collecting data...'});
   $.ajax({
     url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+component.state.symbol+ '&apikey=' + subscriptionkey, 
     // component.state.symbol.toUpperCase()
     crossDomain: true,
     dataType: "json",
     success: function(data, textStatus, jqXHR) {
+      if(data.Information !== undefined){
+        component.setState({message:'Server error or busy. Please try again in a minute'});
+      } else{
         // var info = data['Global Quote'];
         var stock =  data['Global Quote']["01. symbol"];
         var date =  'Data based on last trading day: ' + data['Global Quote']["07. latest trading day"];
@@ -64,7 +76,8 @@ this.lookup = () => {
           x=parseFloat(high )+ parseFloat(low) + 2*parseFloat(close);
         }
         component.setState( {high, low, stock,close, open,date,classicPP, range,x, message:date});
-      },
+        localStorage.setItem('symbol', stock);
+      }},
     error: function (jqXHR, textStatus, error) {
         console.log("Post error: " + error);
         component.setState({message:'Server error or busy. Please try again in a minute'});
@@ -74,13 +87,19 @@ this.lookup = () => {
 
 }
 
+componentDidMount(){
+  if(localStorage.getItem('symbol')){
+  this.lookup();
+}
+}
+
   render() {
     return (
       <div className="App">
         <div className="container">
           <div className='content'>
             <h1> Pivot Points </h1>
-            <TextField id="symbol" type="text"  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
+            <TextField id="symbol" type="text" defaultValue={localStorage.getItem('symbol')}  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
             <br/>
             <Button id='button' variant="contained" color="primary" onClick={this.lookup}> Look up </Button>
            <br/>

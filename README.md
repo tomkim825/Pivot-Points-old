@@ -1,5 +1,15 @@
 # Pivot-Points
 
+<hr>
+
+<img src='https://github.com/tomkim825/Pivot-Points/blob/master/published.png?raw=true'>
+
+**Published in the Microsoft App store**
+
+https://www.microsoft.com/en-us/p/pivot-points/9pk9s4738t6c
+
+<hr>
+
 **Overview**
 
 Pivot points is a techincal tool that stock traders use as a possible indicator of market movement. A pivot point is calculated as an average of significant prices (high, low, close) from the performance of a market in the prior trading period. 

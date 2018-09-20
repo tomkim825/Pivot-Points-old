@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import Personal from './Personal';
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom'
+import { BrowserRouter,Switch, Route } from 'react-router-dom';
 
 const Main = () => (
     <main>

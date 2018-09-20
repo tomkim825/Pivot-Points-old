@@ -82,7 +82,7 @@ this.lookup = () => {
       <div className="App">
         <div className="container">
           <div className='content'>
-            <h1> Pivot Points </h1>
+            <h1>Pivot Points</h1>
             <TextField id="symbol" type="text"  label=" Enter Stock Symbol" onChange={this.enterSymbol}  />
             <br/>
             <Button id='button' variant="contained" color="primary" onClick={this.lookup}> Look up </Button>

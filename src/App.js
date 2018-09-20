@@ -35,13 +35,16 @@ this.enterSymbol = (event) => {
 var component = this;
 
 this.lookup = () => {
-  component.setState({message:'Fetching data...'});
+  component.setState({message:'Collecting data...'});
   $.ajax({
     url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+component.state.symbol+ '&apikey=' + subscriptionkey, 
     // component.state.symbol.toUpperCase()
     crossDomain: true,
     dataType: "json",
     success: function(data, textStatus, jqXHR) {
+      if(data.Information !== undefined){
+        component.setState({message:'Server error or busy. Please try again in a minute'});
+      } else{
         // var info = data['Global Quote'];
         var stock =  data['Global Quote']["01. symbol"];
         var date =  'Data based on last trading day: ' + data['Global Quote']["07. latest trading day"];
@@ -64,7 +67,7 @@ this.lookup = () => {
           x=parseFloat(high )+ parseFloat(low) + 2*parseFloat(close);
         }
         component.setState( {high, low, stock,close, open,date,classicPP, range,x, message:date});
-      },
+      }},
     error: function (jqXHR, textStatus, error) {
         console.log("Post error: " + error);
         component.setState({message:'Server error or busy. Please try again in a minute'});
